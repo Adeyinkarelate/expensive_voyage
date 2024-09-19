@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block main %}
+<style>
+  .hero {
+    background-image: url('/static/images/15.jpg');
+    /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    height: 450px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Adjust the color and opacity */
+    z-index: 1;
+    /* Place it below the text */
+  }
+
+  .hero h1,
+  .hero p {
+    position: relative;
+    /* Make text stack above the overlay */
+    z-index: 2;
+    /* Place text above the overlay */
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
+  .hero p {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+</style>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <p class="lead">Login</p>
+    <h1>We Helping You Find <br> Your <span style="color: #71D1E8;">Dream Vacation</span></h1>
+  </div>
+</section>
+
+<div class="container my-4">
+  <div class="row p-5">
+    <div class="col-sm-12 offset-md-2 col-md-6">
+      <form method="POST" class="p-5 shadow-lg rounded bg-light">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input name="username" type="text" class="form-control" id="test" placeholder="Enter your usernae" />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input name="password" type="password" class="form-control" id="password" placeholder="Enter your password" />
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-block">
+            Login
+          </button>
+        </div>
+      </form>
+      <div class="text-center mt-3">
+        <p>Don't have an account? <a href="{% url 'register' %}">Sign Up</a></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

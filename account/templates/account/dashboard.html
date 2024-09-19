@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+<style>
+  .hero {
+      background-image: url('/static/images/15.jpg');
+      /* Replace with your image path */
+      background-size: cover;
+      background-position: center;
+      height: 450px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+  }
+
+
+  .hero h1 {
+      font-size: 2rem;
+      font-weight: bold;
+  }
+
+  .hero p {
+      font-size: 1.5rem;
+      font-weight: 300;
+  }
+</style>
+
+<!-- Hero Section -->
+{% if not request.user.has_profile %}
+<section class="hero">
+  <div class="container">
+      <p class="lead">The Best Travel Agency</p>
+      <h1>We Helping You Find <br> Your Drea...<span style="color: #f34343;">Update Your Profile</span></h1>
+      <br><br>
+      <a href="{% url 'update_profile' %}" class="btn btn-danger rounded-pill">Update Profile</a>
+  </div>
+</section>
+{% else %}
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+      <p class="lead">Register</p>
+      <h1>We Helping You Find <br> Your <span style="color: #71D1E8;">Dream Vacation</span></h1>
+      <br><br>
+      <a href="{% url 'profile_details' profile.id %}" class="btn btn-info rounded-pill">Profile Details</a>
+  </div>
+</section>
+<br><br><br><br><br><br><br>
+{% endif %}
+
+
+
+
+
+
+{% endblock %}

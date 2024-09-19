@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block main %}
+<style>
+  .hero {
+    background-image: url('/static/images/15.jpg');
+    /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    height: 450px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Adjust the color and opacity */
+    z-index: 1;
+    /* Place it below the text */
+  }
+
+  .hero h1,
+  .hero p {
+    position: relative;
+    /* Make text stack above the overlay */
+    z-index: 2;
+    /* Place text above the overlay */
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
+  .hero p {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+</style>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <p class="lead">Update Profile</p>
+    <h1>We Helping You Find <br> Your <span style="color: #71D1E8;">Dream Vacation</span></h1>
+  </div>
+</section>
+
+
+<div class="container mt-4">
+  <div class="row p-5">
+    <div class="col-sm-12 offset-md-2 col-md-6">
+      <form method="POST" enctype="multipart/form-data" class="p-5 shadow-lg rounded bg-light">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="text" class="form-label">Bio</label>
+          {% render_field form.bio class='form-control' %}
+        </div>
+        <!--  -->
+        <div class="mb-3">
+          <label for="text" class="form-label">Location</label>
+          {% render_field form.location class='form-control' %}
+        </div>
+        <!--  -->
+        <div class="mb-3">
+          <label for="image" class="form-label">Profile Image (Png)</label>
+          {% render_field form.profile_picture class='form-control' %}
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-block">
+            Create
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

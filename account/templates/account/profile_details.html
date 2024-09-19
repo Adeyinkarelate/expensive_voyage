@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block main %}
+<style>
+    .hero {
+        background-image: url('/static/images/15.jpg');
+        /* Replace with your image path */
+        background-size: cover;
+        background-position: center;
+        height: 450px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Adjust the color and opacity */
+        z-index: 1;
+        /* Place it below the text */
+    }
+
+    .hero h1,
+    .hero p {
+        position: relative;
+        /* Make text stack above the overlay */
+        z-index: 2;
+        /* Place text above the overlay */
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+    .hero p {
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <p class="lead">The Best Travel Agency</p>
+        <h1>We Helping You Find <br> Your <span style="color: #71D1E8;">Dream Vacation</span></h1>
+    </div>
+</section>
+
+<div class="container mt-5 ">
+
+
+    <div class="row py-5">
+
+        <div class="col-sm-12 col-md-8 my-2">
+            <p class="font-sm">{{ profile.bio }}</p>
+            <!--  -->
+            <!--  -->
+            <div class="my-2">
+                <i class="bi bi-check-circle-fill text-info fs-3 mr-2"></i>
+                <span class="display-6">{{ user.first_name|capfirst  }} {{ user.last_name|capfirst  }}</span>
+            </div>
+            <!--  -->
+            <div class="my-2">
+                <i class="bi bi-check-circle-fill text-info fs-3 mr-2"></i>
+                <span style="font-size:20px; font-weight:400;">{{ user.email }}</span>
+            </div>
+            <!--location  -->
+            <div class="my-2">
+                <i class="bi bi-check-circle-fill text-info fs-3 mr-2"></i>
+                <span style="font-size:20px; font-weight:400;">location:{{profile.location}}</span>
+            </div>
+            <!--  -->
+            <a href="#" class="btn btn-outline-info shadow rounded-pill my-3">Edit Profile</a>
+            <!--  -->
+        </div>
+        <!--  -->
+        <div class="col-sm-12 col-md-4 my-2">
+            
+                {% if profile.profile_picture %}
+                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="card-img-top "
+                    style="max-height: 400px; object-fit: cover;">
+                {% else %}
+                <img src="https://via.placeholder.com/300" alt="Default Profile Picture" class="card-img-top">
+                {% endif %}
+            
+        </div>
+    </div>
+
+</div>
+{% endblock %}
