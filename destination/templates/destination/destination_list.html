@@ -1,39 +1,82 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block main %}
-    <div class="container mt-5">
-        <h2>Destinations</h2>
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 
-        <!-- Search Form -->
-        <form method="GET" class="form-inline mb-3">
-            <div class="form-group mr-2">
-                <input type="text" name="search" class="form-control" placeholder="Search by name..." value="{{ search_query }}">
-            </div>
-            <div class="form-group mr-2">
-                <select name="country" class="form-control">
-                    <option value="">All Countries</option>
-                    {% for country in countries %}
-                        <option value="{{ country }}" {% if country == filter_country %}selected{% endif %}>{{ country }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
 
-        <!-- Destination List -->
-        <div class="row">
-            {% for destination in destinations %}
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ destination.name }}</h5>
-                            <p class="card-text">{{ destination.description }}</p>
-                            <p class="card-text"><strong>Country:</strong> {{ destination.country }}</p>
-                        </div>
-                    </div>
-                </div>
-            {% empty %}
-                <p>No destinations found.</p>
-            {% endfor %}
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <p class="lead">Lets travel the world with us</p>
+        <h1>EXPLORE THE WORLD <br> WITH <span style="color: #71D1E8;">EXPENSIVE VOYAGE</span></h1>
+    </div>
+</section>
+
+
+
+<br><br><br><br>
+
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h2 class="">Discover <span style="color: #2494ab; font-weight:bold;">Destinations</span> </h2>
+            <p class="lead">Find your next travel destination by searching or filtering through countries.</p>
         </div>
     </div>
+
+    <!-- ============Search Form ==========-->
+    <form method="GET" class="row g-3 justify-content-center mb-5">
+        <div class="col-md-5">
+            <input type="text" name="search" class="form-control form-control-lg" placeholder="Search by name..." value="{{ search_query }}">
+        </div>
+        <div class="col-md-3">
+            <select name="country" class="form-select form-select-lg">
+                <option value="">All Countries</option>
+                {% for country in countries %}
+                    <option value="{{ country }}" {% if country == filter_country %}selected{% endif %}>{{ country }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2 d-grid">
+            <button type="submit" class="btn btn-info btn-lg">Search</button>
+        </div>
+    </form>
+
+    <!--  -->
+    <div class="row  mb-4">
+        <div class="col text-start ">
+            <p class="">Choose Your Place</p>
+            <h2 class="fw-bold">Popular <span style="color:#2494ab;">Tours</span></h2>
+        </div>
+    </div>
+
+    <!-- ===========Destination List====== -->
+    <div class="row">
+        {% for destination in destinations %}
+            <div class="col-md-4 my-3">
+                <a href="">
+                <div class="tour-card">
+                    <!-- Dynamic image from the model -->
+                    <img src="{{ destination.destination_picture.url }}" alt="{{ destination.name }}" >
+                    <div class="tour-label">{{ destination.country }}</div>
+                    <div class="tour-info">
+                        <h5>{{ destination.name }} Tour</h5>
+                        <p style="color: #fff;">${{ destination.price }} / per person</p>
+                    </div>
+                </div>
+            </a>
+            </div>
+
+        {% empty %}
+            <div class="col text-center">
+                <p class="lead">No destinations found.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
 {% endblock %}
