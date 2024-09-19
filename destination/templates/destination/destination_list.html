@@ -44,18 +44,18 @@
     </form>
 
     <!--  -->
-    <div class="row  mb-4">
+    <!-- <div class="row  mb-4">
         <div class="col text-start ">
             <p class="">Choose Your Place</p>
             <h2 class="fw-bold">Popular <span style="color:#2494ab;">Tours</span></h2>
         </div>
-    </div>
+    </div> -->
 
     <!-- ===========Destination List====== -->
     <div class="row">
         {% for destination in destinations %}
             <div class="col-md-4 my-3">
-                <a href="">
+                <a href="{% url 'destination_detail' destination.id %}">
                 <div class="tour-card">
                     <!-- Dynamic image from the model -->
                     <img src="{{ destination.destination_picture.url }}" alt="{{ destination.name }}" >

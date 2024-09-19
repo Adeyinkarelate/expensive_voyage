@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Destination
 
 
@@ -31,3 +31,10 @@ def destination_list(request):
     }
 
     return render(request, 'destination/destination_list.html', context)
+
+# views.py
+
+
+def destination_detail(request, pk):
+    destination = get_object_or_404(Destination, pk=pk)
+    return render(request, 'destination/destination_detail.html', {'destination': destination})
