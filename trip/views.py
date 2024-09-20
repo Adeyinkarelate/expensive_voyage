@@ -2,6 +2,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Trip, Itinerary, Expense
 from django.contrib.auth.decorators import login_required
+from destination.models import Destination
 
 # Category List View
 
@@ -27,27 +28,18 @@ def category_create(request):
     if request.method == 'POST':
         category_name = request.POST.get('category_name')
         Category.objects.create(user=request.user, category_name=category_name)
-        return redirect('category_list')
-    return render(request, 'categories/category_create.html')
+        return redirect('dashboard')
+    return render(request, 'trip/category_create.html')
 
 
-#
-# Trip List View
-@login_required
-def trip_list(request):
-    trips = Trip.objects.filter(user=request.user)
-    return render(request, 'trips/trip_list.html', {'trips': trips})
 
 # Trip Detail View
-
-
 @login_required
-def trip_detail(request, pk):
-    trip = get_object_or_404(Trip, pk=pk, user=request.user)
-    return render(request, 'trips/trip_detail.html', {'trip': trip})
+def trip_detail(request,pk):
+    trip = get_object_or_404(Trip, pk=pk,user=request.user)
+    return render(request, 'trip/trip_detail.html', {'trip': trip})
 
 # Trip Create View
-
 
 @login_required
 def trip_create(request):
@@ -59,6 +51,8 @@ def trip_create(request):
         budget = request.POST.get('budget')
         currency = request.POST.get('currency')
         category = request.POST.get('category')
+
+        # Create the Trip object using the form data
         Trip.objects.create(
             user=request.user,
             trip_name=trip_name,
@@ -69,8 +63,16 @@ def trip_create(request):
             currency=currency,
             category_id=category
         )
-        return redirect('trip_list')
-    return render(request, 'trips/trip_create.html')
+        return redirect('dashboard')  # User dashboard
+
+    # If the request method is GET, display the form
+    destinations = Destination.objects.all()  # Fetch all available destinations
+    categories = Category.objects.filter(user=request.user)  # Fetch categories for the logged-in user
+    context = {
+        'destinations': destinations,
+        'categories': categories
+    }
+    return render(request, 'trip/trip_create.html', context)
 
 
 #

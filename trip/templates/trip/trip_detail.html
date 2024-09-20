@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block main %}
+{% load static %}
+{% load humanize %}
+<link rel="stylesheet" href="{% static 'css/d_details.css' %}">
+
+
+
+
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <p class="lead">Lets travel the world with us</p>
+        <h1>EXPLORE THE WORLD <br> WITH <span style="color: #71D1E8;">EXPENSIVE VOYAGE</span></h1>
+    </div>
+</section>
+
+<br><br>
+
+<!--  -->
+
+<div class="container tour-details">
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-md-8">
+            <h1 class="tour-title">{{ trip.trip_name }} <span style="color: #71D1E8;">{{ destination.country }}</span>
+            </h1>
+
+            <div class="info-icons d-flex">
+                <div class="me-4">
+                    <i class="bi bi-clock"></i> {{ trip.destination.duration }}
+                </div>
+                <div class="me-4">
+                    <i class="bi bi-people"></i>Budget: ${{ trip.budget }}
+                </div>
+                <div class="me-4">
+                    <i class="bi bi-geo-alt"></i> {{ trip.destination.country }}
+                </div>
+                <div>
+                    <i class="bi bi-star"></i>category: {{ trip.category}} Superb
+                </div>
+            </div>
+
+            <h4>Information</h4>
+            <p>{{ trip.destination.description }}</p>
+
+            <p>{{ trip.destination.duration }}, Group: {{ trip.destination.group_size }}, {{ trip.destination.country }}</p>
+
+            <!-- Trip Info -->
+            <table class="table">
+                <tr>
+                    <td>Destination</td>
+                    <td>{{ trip.destination.name }}</td>
+                </tr>
+                <tr>
+                    <td>Departure Time</td>
+                    <td>{{ trip.destination.departure_time|naturaltime }}</td>
+                </tr>
+                <tr>
+                    <td>Departure Mode</td>
+                    <td>{{ trip.destination.departure_mode }}</td>
+                </tr>
+                <tr>
+                    <td>Dress Code</td>
+                    <td>{{ trip.destination.dress_code }}</td>
+                </tr>
+                <tr>
+                    <td>Return Time</td>
+                    <td>{{ trip.destination.return_time|naturaltime }}</td>
+                </tr>
+                <tr>
+                    <td>Price</td>
+                    <td>
+                        {% if destination.discount_price %}
+                        <del>${{ trip.destination.price }}</del> ${{ trip.destination.discount_price }}
+                        {% else %}
+                        ${{ trip.destination.price|intcomma }}
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+            <!-- Price Includes Section -->
+            <h4>Price Includes</h4>
+            <ul>
+                {% for advantage in destination.price_include.all %}
+                <li>{{ advantage.name }}</li>
+                {% empty %}
+                <li>No additional benefits included in the price.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Sidebar - Booking Form -->
+        <div class="col-md-4">
+
+            <a href="" class="btn btn-info">Edit trip</a>
+
+            <div class="my-5 ">
+                <img src="{{ trip.destination.destination_picture.url }}" alt="{{ trip.destination.name }}" class="img-fluid">
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

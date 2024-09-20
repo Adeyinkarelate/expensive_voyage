@@ -1,0 +1,15 @@
+<!-- itinerary/itinerary_list.html -->
+{% extends "base.html" %}
+{% block main %}
+<div class="container">
+    <h1>{{ trip.trip_name }} - Itinerary</h1>
+    <a href="{% url 'itinerary_create' trip.pk %}" class="btn btn-primary">Add Itinerary Item</a>
+    <ul class="list-group mt-4">
+        {% for item in itinerary_items %}
+            <li class="list-group-item">
+                <strong>{{ item.title }}</strong> ({{ item.category }}): {{ item.start_time }} - {{ item.end_time }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

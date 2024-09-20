@@ -1,0 +1,15 @@
+<!-- categories/category_list.html -->
+{% extends "base.html" %}
+{% block main %}
+<div class="container">
+    <h1>Categories</h1>
+    <a href="{% url 'category_create' %}" class="btn btn-primary">Add Category</a>
+    <ul class="list-group mt-4">
+        {% for category in categories %}
+            <li class="list-group-item">
+                <a href="{% url 'category_detail' category.pk %}">{{ category.category_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

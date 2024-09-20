@@ -5,23 +5,21 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import auth
 from .models import Profile, User
 from django.contrib.auth.decorators import login_required
-
-# Create your views here.
-
-# user dashboard  # trips = Trip.objects.filter(user=request.user)
+from trip.models import Trip
 
 
 def dashboard(request):
+    trips = Trip.objects.filter(user=request.user)
     # If using the Profile model
     profile = Profile.objects.get(user=request.user)
 
     # If only using the User model
     user = request.user
-
     # Pass both the user and profile info (if applicable) to the template
     context = {
         'user': user,
         'profile': profile,
+        'trips':trips,
     }
     return render(request, 'account/dashboard.html', context)
 
@@ -109,5 +107,4 @@ def logout_user(request):
     return redirect('login')
 
 
-#Edit profile 
-
+# Edit profile
