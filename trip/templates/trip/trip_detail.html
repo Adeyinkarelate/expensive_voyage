@@ -94,7 +94,12 @@
         <!-- Sidebar - Booking Form -->
         <div class="col-md-4">
 
-            <a href="" class="btn btn-info">Edit trip</a>
+            <a href="{% url 'itinerary_create' trip.pk %}" class="btn btn-info btn-lg">
+                <i class="bi bi-calendar-plus"></i> Create Itinerary
+            </a>
+            <a href="{% url 'itinerary_list' trip.pk %}" class="btn btn-outline-secondary btn-lg">
+                <i class="bi bi-card-checklist"></i> Itinerary List
+            </a>
 
             <div class="my-5 ">
                 <img src="{{ trip.destination.destination_picture.url }}" alt="{{ trip.destination.name }}" class="img-fluid">

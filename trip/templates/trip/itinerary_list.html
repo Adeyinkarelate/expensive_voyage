@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block main %}
+<style>
+    .hero {
+        background-image: url('/static/images/15.jpg');
+        /* Replace with your image path */
+        background-size: cover;
+        background-position: center;
+        height: 450px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Adjust the color and opacity */
+        z-index: 1;
+        /* Place it below the text */
+    }
+
+    .hero h1,
+    .hero p {
+        position: relative;
+        /* Make text stack above the overlay */
+        z-index: 2;
+        /* Place text above the overlay */
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+    .hero p {
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <p class="lead">Itenary List</p>
+        <h1>We Helping You Find <br> Your <span style="color: #71D1E8;">Dream Vacation</span></h1>
+    </div>
+</section>
+
+<div class="container my-4">
+    <div class="row p-5">
+        <div class="col-sm-12 offset-md-2 col-md-6">
+
+            <div class="container mt-4">
+                <h2 class="text-center">Itineraries for {{ trip.trip_name }}</h2>
+                <div class="d-flex justify-content-between align-items-center my-4">
+                    
+                    <a href="{% url 'itinerary_create' trip.id %}" class="btn btn-primary">Add New Itinerary</a>
+                </div>
+
+                {% if itineraries %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Start Time</th>
+                                <th scope="col">End Time</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for itinerary in itineraries %}
+                            <tr>
+                                <td>{{ itinerary.title }}</td>
+                                <td>{{ itinerary.description }}</td>
+                                <td>{{ itinerary.get_category_display }}</td>
+                                <td>{{ itinerary.start_time|date:"Y-m-d H:i" }}</td>
+                                <td>{{ itinerary.end_time|date:"Y-m-d H:i" }}</td>
+                                <td>
+                                   
+                                    <a href="{% url 'itinerary_update' itinerary.pk %}"
+                                        class="btn btn-warning btn-sm">Edit</a>
+                                    <form action="{% url 'itinerary_delete' itinerary.pk %}" method="POST"
+                                        class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-center">No itineraries found for this trip.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    {% endblock %}

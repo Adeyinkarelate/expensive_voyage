@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block main %}
+<style>
+    .hero {
+        background-image: url('/static/images/15.jpg');
+        /* Replace with your image path */
+        background-size: cover;
+        background-position: center;
+        height: 450px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Adjust the color and opacity */
+        z-index: 1;
+        /* Place it below the text */
+    }
+
+    .hero h1,
+    .hero p {
+        position: relative;
+        /* Make text stack above the overlay */
+        z-index: 2;
+        /* Place text above the overlay */
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+    .hero p {
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <p class="lead">Create Itenary</p>
+        <h1>We Helping You Find <br> Your <span style="color: #71D1E8;">Dream Vacation</span></h1>
+    </div>
+</section>
+
+<div class="container my-4">
+    <div class="row p-5">
+        <div class="col-sm-12 offset-md-2 col-md-6">
+            <h1>Create Itinerary for {{ trip.trip_name }}</h1>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="">Select a category</option>
+                        <option value="transport">Transport</option>
+                        <option value="lodging">Lodging</option>
+                        <option value="activities">Activities</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="start_time" class="form-label">Start Time</label>
+                    <input type="datetime-local" class="form-control" id="start_time" name="start_time" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="end_time" class="form-label">End Time</label>
+                    <input type="datetime-local" class="form-control" id="end_time" name="end_time" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create Itinerary</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -181,9 +181,10 @@
         <li><a href="{% url 'profile_details' profile.id %}">Profile Details</a></li>
         <li><a href="{% url 'trip_create' %}">Create trip</a></li>
         <!-- ============CRETE category=============== -->
-        <li><!-- Modal -->{% include 'category.html' %}</li>
+        <li><a href="{% url 'category_create' %}">Create Category</a></li>
         <!-- =========================== -->
-        <li><a href="#">Logout</a></li>
+        <li><a href="{% url 'category_list' %}">All category</a></li>
+        
         {% endif %}
 
       </ul>

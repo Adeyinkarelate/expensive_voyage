@@ -1,15 +1,107 @@
 <!-- categories/category_list.html -->
 {% extends "base.html" %}
 {% block main %}
-<div class="container">
-    <h1>Categories</h1>
-    <a href="{% url 'category_create' %}" class="btn btn-primary">Add Category</a>
-    <ul class="list-group mt-4">
-        {% for category in categories %}
-            <li class="list-group-item">
-                <a href="{% url 'category_detail' category.pk %}">{{ category.category_name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+{% load static %}
+
+<style>
+    .hero {
+        background-image: url('/static/images/15.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 450px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+    }
+
+    .hero h1, .hero p {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+    .hero p {
+        font-size: 1.5rem;
+        font-weight: 300;
+    }
+
+    .category-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <p class="lead">Login</p>
+        <h1>We Help You Find <br> Your <span style="color: #71D1E8;">Dream Vacation</span></h1>
+    </div>
+</section>
+
+<div class="container my-4">
+    <div class="row p-5">
+        <div class="col-sm-12 offset-md-2 col-md-6">
+            <h1>Categories</h1>
+            <a href="{% url 'category_create' %}" class="btn btn-primary">Add Category</a>
+            <ul class="list-group mt-4">
+                {% for category in categories %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{% url 'category_detail' category.pk %}">{{ category.category_name }}</a>
+                    <div class="category-actions">
+                        <a href="" class="btn btn-sm btn-warning">Edit</a>
+
+                        <!-- Delete Button to trigger modal -->
+                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ category.pk }}">
+                            Delete
+                        </button>
+
+                        <!-- Delete Confirmation Modal -->
+                        <div class="modal fade" id="deleteModal{{ category.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ category.pk }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel{{ category.pk }}">Confirm Delete</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete the category <strong>{{ category.category_name }}</strong>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form method="POST" action="{% url 'category_delete' category.pk %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
+
 {% endblock %}
